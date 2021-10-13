@@ -1,0 +1,98 @@
+# Experiment Setting
+data_download_root: "../../data/datasets/"
+result_folder: "../../data/results_output/"
+expr_tag: "H-pl_unet_pascalVoc_dice_3-H"
+expr_index: 0
+model_name: "UNETModel"
+fig_save_interval: 20
+part_results_saving: True # if true, only save a part of the validation results;
+
+cross_validation: False # to determine whether to use cross validation;
+num_folds: "None"
+validation: True # to determine whether to use validation dataset;
+
+
+# Addon
+batch_size: 16
+num_classes: 21
+dropout: 0.1
+learning_rate: 0.01
+use_scheduler: True
+scheduler: "MultiStepLR"
+optimizer: "SGD"
+logger: "csv"   ## neptune, csv, 
+
+crop_size: 224
+scale_from: 0.7 # the ratial of the smallest crop size;
+scale_to: 1.0
+mean: [0.485, 0.456, 0.406]
+std: [0.229, 0.224, 0.225]
+
+## Unet add on
+num_layers: 5
+features_start: 64
+bilinear: False
+
+
+# Dataset Setting
+dataset_name: "VOC"
+download_dataset: True # Download dataset from Google Drive;
+fileId: "1IU5KlTLNujMM8dM_KbbDlm7n7rDeXo-I"
+expand_channel: False # if num_channel != 3
+num_workers: 0
+pin_memory: True
+data_year: "2012"
+
+
+
+# Neural Network Setting
+pre_weights: True # Use pretrained weights or not
+continue_training: False # Resume training from saved checkpoints
+continue_training_ckpt: "None"
+
+
+weight_decay: 0.0005
+
+## MultiStepLR
+MultiStepLR_gamma: 0.1
+MultiStepLR_milestones_1: 0.4
+MultiStepLR_milestones_2: 0.6
+
+## LambdaLR
+LambdaLR_lr_lambda: 0.01
+
+## CyclicLR
+CyclicLR_base_lr: 0.001
+CyclicLR_max_lr: 1
+CyclicLR_step_size_up: 20
+CyclicLR_mode: "triangular2"
+CyclicLR_cycle_momentum: True
+
+## OneCyclicLR
+
+## ReduceLROnPlateau
+ReduceLROnPlateau_mode: "max"
+ReduceLROnPlateau_factor: 0.5
+ReduceLROnPlateau_patience: 0
+
+## CosineAnnealingWarmRestarts
+CosineAnnealingWarmRestarts_T_0: 10
+CosineAnnealingWarmRestarts_T_mult: 3
+CosineAnnealingWarmRestarts_eta_min: 0.001
+CosineAnnealingWarmRestarts_last_epoch: -1
+
+
+## SGD
+momentum: 0.9
+
+## Adam
+beta: [0.9, 0.999]
+eps: 0.00000001 # 1e-8
+amsgrad: False
+
+num_nodes: 1
+precision: 16
+accelerator: "ddp" # the mode of using GPUs
+progress_bar_refresh_rate: 1
+max_epochs: 41
+gpus: 2
